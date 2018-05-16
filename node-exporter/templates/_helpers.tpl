@@ -23,7 +23,7 @@ provider: {{ .Values.nodeExporter.labels.provider }}
 
 {{- define "labels.stakater" -}}
 {{ template "labels.selector" . }}
-version: {{ .Values.nodeExporter.labels.version | quote }}
+version: "{{ .Values.nodeExporter.labels.version }}"
 {{- end -}}
 
 {{- define "labels.chart" -}}

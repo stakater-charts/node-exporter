@@ -15,7 +15,7 @@ spec:
       hostNetwork: {{ .Values.nodeExporter.daemonset.hostNetwork }}
       hostPID: {{ .Values.nodeExporter.daemonset.hostPID }}
       containers:
-      - image:  {{ .Values.nodeExporter.image.name }}:{{ .Values.nodeExporter.image.tag }}
+      - image:  "{{ .Values.nodeExporter.image.name }}:{{ .Values.nodeExporter.image.tag }}"
         args:
         - "--path.procfs={{ .Values.nodeExporter.daemonset.procfs }}"
         - "--path.sysfs={{ .Values.nodeExporter.daemonset.sysfs }}"

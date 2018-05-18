@@ -5,7 +5,7 @@ metadata:
     expose: "{{ .Values.nodeExporter.service.expose }}"
 {{ include "labels.stakater" . | indent 4 }}
 {{ include "labels.chart" . | indent 4 }}
-  name: node-exporter
+  name: {{ template "name" . }}
   annotations:
     fabric8.io/ingress.annotations: |-
       ingress.kubernetes.io/force-ssl-redirect: {{ .Values.nodeExporter.service.forceSslRedirect }}

@@ -1,0 +1,29 @@
+nodeExporter:
+  labels:
+    group: com.stakater.platform
+    provider: stakater
+    version: 0.15.2
+  namespace: dev
+  image:
+    name: quay.io/prometheus/node-exporter
+    tag: v0.15.2
+  daemonset:
+    procfs: /host/proc
+    sysfs: /host/sys
+    hostNetwork: "true"
+    hostPID: "true"
+    resources:
+      requests:
+        memory: 30Mi
+        cpu: 100m
+      limits:
+        memory: 50Mi
+        cpu: 200m
+    tolerations:
+        effect: NoSchedule
+        operator: Exists
+  service:
+    forceSslRedirect: "true"
+    ingressClass: internal-ingress
+    annotations:
+    expose: "true"

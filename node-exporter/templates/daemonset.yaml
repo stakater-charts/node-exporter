@@ -1,0 +1,64 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: {{ template "name" . }}
+  labels:
+{{ include "labels.stakater" . | indent 4 }}
+{{ include "labels.chart" . | indent 4 }}
+spec:
+  template:
+    metadata:
+      labels:
+{{ include "labels.selector" . | indent 8 }}
+      name: {{ template "name" . }}
+    spec:
+      hostNetwork: {{ .Values.nodeExporter.daemonset.hostNetwork }}
+      hostPID: {{ .Values.nodeExporter.daemonset.hostPID }}
+      containers:
+      - image:  "{{ .Values.nodeExporter.image.name }}:{{ .Values.nodeExporter.image.tag }}"
+        args:
+        - "--path.procfs={{ .Values.nodeExporter.daemonset.procfs }}"
+        - "--path.sysfs={{ .Values.nodeExporter.daemonset.sysfs }}"
+        name: {{ template "name" . }}
+        ports:
+        - containerPort: 9100
+          hostPort: 9100
+          name: scrape
+        {{- with .Values.nodeExporter.daemonset.resources }}
+        resources:
+          {{- with .requests }}
+          requests:
+            {{- with .memory }}
+            memory: {{ . }}
+            {{- end }}
+            {{- with .cpu }}
+            cpu: {{ . }}
+            {{- end }}
+          {{- end }}
+          {{- with .limits }}
+          limits:
+            {{- with .memory }}
+            memory: {{ . }}
+            {{- end }}
+            {{- with .cpu }}
+            cpu: {{ . }}
+            {{- end }}
+          {{- end }}
+        {{- end }}
+        volumeMounts:
+        - name: proc
+          readOnly:  true
+          mountPath: {{ .Values.nodeExporter.daemonset.procfs }}
+        - name: sys
+          readOnly: true
+          mountPath: {{ .Values.nodeExporter.daemonset.sysfs }}
+      tolerations:
+        - effect: {{ .Values.nodeExporter.daemonset.tolerations.effect }}
+          operator: {{ .Values.nodeExporter.daemonset.tolerations.operator }}
+      volumes:
+      - name: proc
+        hostPath:
+          path: /proc
+      - name: sys
+        hostPath:
+          path: /sys

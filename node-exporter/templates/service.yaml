@@ -3,6 +3,7 @@ kind: Service
 metadata:
   labels:
     expose: "{{ .Values.nodeExporter.service.expose }}"
+    k8s-app: {{ template "name" . }}
 {{ include "labels.stakater" . | indent 4 }}
 {{ include "labels.chart" . | indent 4 }}
   name: {{ template "name" . }}

@@ -3,10 +3,10 @@ kind: Service
 metadata:
   labels:
     expose: "{{ .Values.nodeExporter.service.expose }}"
-    k8s-app: {{ template "name" . }}
-{{ include "labels.stakater" . | indent 4 }}
-{{ include "labels.chart" . | indent 4 }}
-  name: {{ template "name" . }}
+    k8s-app: {{ template "node-exporter.name" . }}
+{{ include "node-exporter.labels.stakater" . | indent 4 }}
+{{ include "node-exporter.labels.chart" . | indent 4 }}
+  name: {{ template "node-exporter.name" . }}
   annotations:
     fabric8.io/ingress.annotations: |-
       ingress.kubernetes.io/force-ssl-redirect: {{ .Values.nodeExporter.service.forceSslRedirect }}
@@ -24,4 +24,4 @@ spec:
     port: 9100
     protocol: TCP
   selector:
-{{ include "labels.selector" . | indent 4 }}
+{{ include "node-exporter.labels.selector" . | indent 4 }}

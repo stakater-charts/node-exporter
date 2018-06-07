@@ -1,16 +1,16 @@
 apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
-  name: {{ template "name" . }}
+  name: {{ template "node-exporter.name" . }}
   labels:
-{{ include "labels.stakater" . | indent 4 }}
-{{ include "labels.chart" . | indent 4 }}
+{{ include "node-exporter.labels.stakater" . | indent 4 }}
+{{ include "node-exporter.labels.chart" . | indent 4 }}
 spec:
   template:
     metadata:
       labels:
-{{ include "labels.selector" . | indent 8 }}
-      name: {{ template "name" . }}
+{{ include "node-exporter.labels.selector" . | indent 8 }}
+      name: {{ template "node-exporter.name" . }}
     spec:
       hostNetwork: {{ .Values.nodeExporter.daemonset.hostNetwork }}
       hostPID: {{ .Values.nodeExporter.daemonset.hostPID }}
@@ -19,7 +19,7 @@ spec:
         args:
         - "--path.procfs={{ .Values.nodeExporter.daemonset.procfs }}"
         - "--path.sysfs={{ .Values.nodeExporter.daemonset.sysfs }}"
-        name: {{ template "name" . }}
+        name: {{ template "node-exporter.name" . }}
         ports:
         - containerPort: 9100
           hostPort: 9100

@@ -3,7 +3,6 @@ nodeExporter:
     group: com.stakater.platform
     provider: stakater
     version: 0.15.2
-  namespace: dev
   image:
     name: quay.io/prometheus/node-exporter
     tag: v0.15.2

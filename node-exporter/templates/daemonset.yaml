@@ -24,6 +24,16 @@ spec:
         - containerPort: 9100
           hostPort: 9100
           name: scrape
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 9100
+          initialDelaySeconds: 20            
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 9100
+          initialDelaySeconds: 30 
         {{- with .Values.nodeExporter.daemonset.resources }}
         resources:
           {{- with .requests }}

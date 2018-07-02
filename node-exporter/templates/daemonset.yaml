@@ -62,6 +62,7 @@ spec:
         - name: sys
           readOnly: true
           mountPath: {{ .Values.nodeExporter.daemonset.sysfs }}
+      securityContext: {}
       tolerations:
         - effect: {{ .Values.nodeExporter.daemonset.tolerations.effect }}
           operator: {{ .Values.nodeExporter.daemonset.tolerations.operator }}

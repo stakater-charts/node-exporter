@@ -6,12 +6,15 @@ metadata:
 {{ include "node-exporter.labels.stakater" . | indent 4 }}
 {{ include "node-exporter.labels.chart" . | indent 4 }}
 spec:
+  updateStrategy:
+    type: RollingUpdate
   template:
     metadata:
       labels:
 {{ include "node-exporter.labels.selector" . | indent 8 }}
       name: {{ template "node-exporter.name" . }}
     spec:
+      serviceAccountName: prometheus-node-exporter
       hostNetwork: {{ .Values.nodeExporter.daemonset.hostNetwork }}
       hostPID: {{ .Values.nodeExporter.daemonset.hostPID }}
       containers:

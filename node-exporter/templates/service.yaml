@@ -7,15 +7,10 @@ metadata:
 {{ include "node-exporter.labels.stakater" . | indent 4 }}
 {{ include "node-exporter.labels.chart" . | indent 4 }}
   name: {{ template "node-exporter.name" . }}
+{{- if .Values.nodeExporter.service.annotations }}
   annotations:
-    fabric8.io/ingress.annotations: |-
-      ingress.kubernetes.io/force-ssl-redirect: {{ .Values.nodeExporter.service.forceSslRedirect }}
-      kubernetes.io/ingress.class: {{ .Values.nodeExporter.service.ingressClass }}
-      {{- with .Values.nodeExporter.service.annotations }}
-      {{- range $key, $value := . }}
-      {{ $key }}: {{ $value }}
-      {{- end }}
-      {{- end }}
+{{ toYaml .Values.nodeExporter.service.annotations | indent 4 }}
+{{- end }}
 spec:
   type: ClusterIP
   clusterIP: None

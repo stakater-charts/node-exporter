@@ -1,8 +1,4 @@
 nodeExporter:
-  labels:
-    group: com.stakater.platform
-    provider: stakater
-    version: 0.15.2
   image:
     name: quay.io/prometheus/node-exporter
     tag: v0.15.2
@@ -22,13 +18,5 @@ nodeExporter:
         effect: NoSchedule
         operator: Exists
   service:
-    annotations:
-      config.xposer.stakater.com/Domain: stackator.com
-      config.xposer.stakater.com/IngressNameTemplate: '{{.Service}}-{{.Namespace}}'
-      config.xposer.stakater.com/IngressURLTemplate: '{{.Service}}.{{.Namespace}}.{{.Domain}}'
-      config.xposer.stakater.com/TLS: "true"
-      xposer.stakater.com/annotations: |-
-        kubernetes.io/ingress.class: internal-ingress
-        ingress.kubernetes.io/force-ssl-redirect: true
-        certmanager.k8s.io/cluster-issuer: letsencrypt-production
+    annotations: {}
     expose: "true"
